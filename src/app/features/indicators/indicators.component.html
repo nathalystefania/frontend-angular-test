@@ -1,0 +1,56 @@
+<h1>Indicadores Económicos</h1>
+    
+<div *ngIf="errorMessage" [class.error]="'p-2'" class="bg-danger rounded-1 text-white error mb-3">
+  {{ errorMessage }}
+</div> 
+
+<div *ngIf="indicators.length">
+  <mat-card appearance="outlined" class="mb-2" *ngFor="let indicator of indicators">
+    <mat-card-content class="p-2">
+      <div class="row align-items-center justify-content-start g-2">
+        <div class="col">
+          <div class="row g-2">
+            <div class="col-auto col-md-1">
+              <div class="circle-icon">
+                <mat-icon aria-hidden="false" aria-label="money icon" fontIcon="attach_money"></mat-icon>
+              </div>
+            </div>
+            <div class="col-4 col-md-2 align-middle" (click)="goToDetail(indicator.name)">
+              <h5 class="card-title lh-base">{{ indicator.name | uppercase }}</h5>
+            </div>
+            <div class="col-4">
+              <p class="card-text mb-0 lh-1">
+                {{ getPrefix(indicator.name) }}{{ indicator.values[indicator.values.length - 1]?.Valor || 'Sin datos' }}
+                {{ getSufix(indicator.name) }}
+              </p>
+              <p class="card-text mb-0 lh-1">
+                <small class="text-body-secondary" *ngIf="indicator.name !== 'ipc'"> 1 {{ indicator.alias }}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto align-self-end">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="goToDetail(indicator.name)">
+              <mat-icon>info</mat-icon>
+              <span>Ver detalle</span>
+            </button>
+            <button mat-menu-item (click)="goToChart(indicator.name)">
+              <mat-icon>query_stats</mat-icon>
+              <span>Ver estadísticas</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+  
+
+<div *ngIf="!indicators.length && !errorMessage">
+  <p>Cargando indicadores...</p>
+</div>
+  

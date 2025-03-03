@@ -1,0 +1,25 @@
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="row justify-content-between w-100 g-0">
+        <div class="col" *ngIf="showBackButton">
+          <button mat-icon-button (click)="goBack()" class="float-start">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <h1 class="float-start mb-0" *ngIf="indicatorName">{{ indicatorName.toUpperCase() }}</h1>
+        </div>
+
+        <div class="col-auto">
+          <a class="navbar-brand" href="#" [routerLink]="['/']">
+            <img src="assets/images/logo-3it.svg" alt="Logo" height="35" class="d-inline-block align-text-top">
+          </a>
+          <p *ngIf="isInRoute('/')" class="text-nowrap mb-0">
+            {{ title }}
+          </p>
+        </div>
+      </div>
+    </div>
+</nav>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
+  
